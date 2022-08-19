@@ -19,14 +19,15 @@ const Participant = () => {
   useEffect(() => {
     // Initialize Firebase
     const firebaseConfig = {
-      databaseURL: `${process.env.REACT_APP_FIREBASE_DB_URL}`, //process.env.FIREBASE_DB_URL,
+      /* databaseURL: `${process.env.REACT_APP_FIREBASE_DB_URL}`, //process.env.FIREBASE_DB_URL, */
+      databaseURL: "https://mealsplan-a6ec8-default-rtdb.firebaseio.com/",
     };
     const app = initializeApp(firebaseConfig);
 
     // Initialize Realtime Database and get a reference to the service
 
     const dbRef = ref(getDatabase());
-    get(child(dbRef, `data/`))
+    get(child(dbRef, `users`))
       .then((snapshot) => {
         if (snapshot.exists()) {
           setParticipants([snapshot.val()]);
@@ -40,6 +41,8 @@ const Participant = () => {
   }, []);
 
   const [participants, setParticipants] = useState([]);
+
+  console.log("PARTICIPANTES: ", participants);
 
   const label = { inputProps: { "aria-label": "Color switch demo" } };
 
@@ -67,48 +70,28 @@ const Participant = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {participants.map((person) => (
+            {participants[0]?.map((person, index) => (
               <TableRow
-                key={person.uid}
+                key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {person.uid.name}
+                  {person.name}
                 </TableCell>
                 <TableCell align="right">
-                  <Switch
-                    {...label}
-                    defaultChecked={person.uid.lunch}
-                    color="warning"
-                  />
+                  <Switch {...label} defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch
-                    {...label}
-                    defaultChecked={person.uid.dinner}
-                    color="warning"
-                  />
+                  <Switch {...label} defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch
-                    {...label}
-                    defaultChecked={person.uid.aw_lunch}
-                    color="warning"
-                  />
+                  <Switch {...label} defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch
-                    {...label}
-                    defaultChecked={person.uid.aw_dinner}
-                    color="warning"
-                  />
+                  <Switch {...label} defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch
-                    {...label}
-                    defaultChecked={person.uid.vegan}
-                    color="warning"
-                  />
+                  <Switch {...label} defaultChecked color="warning" />
                 </TableCell>
               </TableRow>
             ))}
