@@ -1,22 +1,17 @@
-import logo from './logo.svg';
+import meme from './meme.jpeg';
 import './App.css';
+import Participant from './components/Participant';
+import fintualLogo from "./finLogo.gif"
 
 function App() {
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <img src={meme} className="App-logo" alt="memeLogo" />
+        <Participant/>
+        <img src={fintualLogo}  alt="finLogo" />
       </header>
     </div>
   );

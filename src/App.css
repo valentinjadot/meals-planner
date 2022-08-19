@@ -10,6 +10,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+    margin: 50px;
   }
 }
 
@@ -35,4 +36,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.App-Button {
+  margin-top: 500px;
 }
