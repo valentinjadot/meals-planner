@@ -15,6 +15,9 @@ import Button from "@mui/material/Button";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get } from "firebase/database";
 
+// Whatsapp API
+import { postMessage } from "../api/postMessage";
+
 const Participant = () => {
   useEffect(() => {
     const firebaseConfig = {
@@ -109,6 +112,7 @@ const Participant = () => {
 
   const submitHandler = () => {
     const order = orderSummary();
+    postMessage("hola soy la data");
     console.log(`ALMUERZO 
 
       - Almuerzos normales: ${order[0]}
