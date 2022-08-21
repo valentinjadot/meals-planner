@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SimpleDialog from "./AddParticipant";
+import SimpleDialog from "./SimpleDialog";
 
 // MUI
 import Table from "@mui/material/Table";
@@ -34,7 +34,6 @@ const Participant = () => {
       .then((snapshot) => {
         if (snapshot.exists()) {
           setParticipants([snapshot.val()][0]);
-          setIndexParticipant([snapshot.val()][0].length);
         } else {
           console.log("No data available");
         }
@@ -42,12 +41,9 @@ const Participant = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  });
 
   const [participants, setParticipants] = useState([]);
-  const [indexParticipant, setIndexParticipant] = useState();
-
-  console.log("INDICE DE PARTICIPANTES: ", indexParticipant);
 
   const submitHandler = () => {
     const order = orderSummary(participants);
@@ -69,29 +65,8 @@ const Participant = () => {
     // mandar mensaje de whatsapp
   };
 
-  function writeUserData(data) {
-    const db = getDatabase();
-    set(ref(db, "users/" + indexParticipant), {
-      name: data.name,
-      lunch: data.lunch,
-      dinner: data.dinner,
-      vegan: data.vegan,
-      ta_lunch: data.ta_lunch,
-      ta_dinner: data.ta_dinner,
-    });
-  }
-
   const submitNewParticipant = () => {
     setOpen(true);
-
-    /*     writeUserData({
-      name: "Cecilia Ramallo",
-      lunch: true,
-      dinner: true,
-      vegan: false,
-      ta_lunch: false,
-      ta_dinner: false,
-    }); */
   };
 
   const [open, setOpen] = React.useState(false);
@@ -112,8 +87,8 @@ const Participant = () => {
 
   return (
     <div className="App">
-      <p>Comidas para mañana!</p>
-      <p>Fecha: {text}</p>
+      <p>Comidas para mañana! 🐷 🥬</p>
+      <p>Fecha del pedido: {text}</p>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -137,19 +112,19 @@ const Participant = () => {
                   {person.name}
                 </TableCell>
                 <TableCell align="right">
-                  <Switch defaultChecked color="warning" />
+                  <Switch defaultChecked={person.lunch} color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch defaultChecked color="warning" />
+                  <Switch defaultChecked={person.dinner} color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch defaultChecked color="warning" />
+                  <Switch defaultChecked={person.ta_lunch} color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch defaultChecked color="warning" />
+                  <Switch defaultChecked={person.ta_dinner} color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch defaultChecked color="warning" />
+                  <Switch defaultChecked={person.vegan} color="warning" />
                 </TableCell>
               </TableRow>
             ))}
