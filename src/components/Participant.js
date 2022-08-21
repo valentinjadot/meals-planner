@@ -17,20 +17,16 @@ import { getDatabase, ref, child, get } from "firebase/database";
 
 const Participant = () => {
   useEffect(() => {
-    // Initialize Firebase
     const firebaseConfig = {
-      /* databaseURL: `${process.env.REACT_APP_FIREBASE_DB_URL}`, //process.env.FIREBASE_DB_URL, */
-      databaseURL: "https://mealsplan-a6ec8-default-rtdb.firebaseio.com/",
+      databaseURL: `${process.env.REACT_APP_FIREBASE_DB_URL}`,
     };
     const app = initializeApp(firebaseConfig);
+    const firebaseData = ref(getDatabase());
 
-    // Initialize Realtime Database and get a reference to the service
-
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, `users`))
+    get(child(firebaseData, `users`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          setParticipants([snapshot.val()]);
+          setParticipants([snapshot.val()][0]);
         } else {
           console.log("No data available");
         }
@@ -42,14 +38,96 @@ const Participant = () => {
 
   const [participants, setParticipants] = useState([]);
 
-  console.log("PARTICIPANTES: ", participants);
+  const orderSummary = () => {
+    const normalLunch = participants.filter(function (person) {
+      if (!person.vegan) {
+        return person.lunch;
+      }
+      return 0;
+    }).length;
 
-  const label = { inputProps: { "aria-label": "Color switch demo" } };
+    const deliveryNormalLunch = participants.filter(function (person) {
+      if (!person.vegan) {
+        return person.ta_lunch;
+      }
+      return 0;
+    }).length;
+
+    const veganLunch = participants.filter(function (person) {
+      if (person.vegan) {
+        return person.lunch;
+      }
+      return 0;
+    }).length;
+
+    const deliveryVeganLunch = participants.filter(function (person) {
+      if (person.vegan) {
+        return person.ta_lunch;
+      }
+      return 0;
+    }).length;
+
+    const normalDinner = participants.filter(function (person) {
+      if (!person.vegan) {
+        return person.dinner;
+      }
+      return 0;
+    }).length;
+
+    const deliveryNormalDinner = participants.filter(function (person) {
+      if (!person.vegan) {
+        return person.ta_dinner;
+      }
+      return 0;
+    }).length;
+
+    const veganDinner = participants.filter(function (person) {
+      if (person.vegan) {
+        return person.dinner;
+      }
+      return 0;
+    }).length;
+
+    const deliveryVeganDinner = participants.filter(function (person) {
+      if (person.vegan) {
+        return person.ta_dinner;
+      }
+      return 0;
+    }).length;
+
+    return [
+      normalLunch,
+      veganLunch,
+      deliveryNormalLunch,
+      deliveryVeganLunch,
+      normalDinner,
+      veganDinner,
+      deliveryNormalDinner,
+      deliveryVeganDinner,
+    ];
+  };
+
+  const submitHandler = () => {
+    const order = orderSummary();
+    console.log(`ALMUERZO 
+
+      - Almuerzos normales: ${order[0]}
+      - Almuerzos veganos: ${order[1]}
+      - Para llevar normales: ${order[2]}
+      - Para llevar veganos: ${order[3]}
+      
+      CENA 
+      
+      - Cenas normales: ${order[4]}
+      - Cenas veganas: ${order[5]}
+      - Para llevar normales: ${order[6]}
+      - Para llevar veganos: ${order[7]}`);
+
+    // mandar mensaje de whatsapp
+  };
 
   let tomorrow = new Date();
-
   tomorrow.setDate(tomorrow.getDate() + 1).toString();
-
   let text = tomorrow.toDateString();
 
   return (
@@ -70,7 +148,7 @@ const Participant = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {participants[0]?.map((person, index) => (
+            {participants?.map((person, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -79,19 +157,19 @@ const Participant = () => {
                   {person.name}
                 </TableCell>
                 <TableCell align="right">
-                  <Switch {...label} defaultChecked color="warning" />
+                  <Switch defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch {...label} defaultChecked color="warning" />
+                  <Switch defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch {...label} defaultChecked color="warning" />
+                  <Switch defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch {...label} defaultChecked color="warning" />
+                  <Switch defaultChecked color="warning" />
                 </TableCell>
                 <TableCell align="right">
-                  <Switch {...label} defaultChecked color="warning" />
+                  <Switch defaultChecked color="warning" />
                 </TableCell>
               </TableRow>
             ))}
@@ -105,7 +183,7 @@ const Participant = () => {
       <br></br>
       <br></br>
 
-      <Button variant="contained" color="success">
+      <Button variant="contained" color="success" onClick={submitHandler}>
         Enviar a Hugo
       </Button>
     </div>
