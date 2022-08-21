@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import SimpleDialog from "./AddParticipant";
 
 // MUI
 import Table from "@mui/material/Table";
@@ -13,10 +14,13 @@ import Button from "@mui/material/Button";
 
 // Firebase
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, child, get, set } from "firebase/database";
 
 // Whatsapp API
 import { postMessage } from "../api/postMessage";
+
+// Utils
+import orderSummary from "../utils/orderSummary";
 
 const Participant = () => {
   useEffect(() => {
@@ -30,6 +34,7 @@ const Participant = () => {
       .then((snapshot) => {
         if (snapshot.exists()) {
           setParticipants([snapshot.val()][0]);
+          setIndexParticipant([snapshot.val()][0].length);
         } else {
           console.log("No data available");
         }
@@ -40,78 +45,12 @@ const Participant = () => {
   }, []);
 
   const [participants, setParticipants] = useState([]);
+  const [indexParticipant, setIndexParticipant] = useState();
 
-  const orderSummary = () => {
-    const normalLunch = participants.filter(function (person) {
-      if (!person.vegan) {
-        return person.lunch;
-      }
-      return 0;
-    }).length;
-
-    const deliveryNormalLunch = participants.filter(function (person) {
-      if (!person.vegan) {
-        return person.ta_lunch;
-      }
-      return 0;
-    }).length;
-
-    const veganLunch = participants.filter(function (person) {
-      if (person.vegan) {
-        return person.lunch;
-      }
-      return 0;
-    }).length;
-
-    const deliveryVeganLunch = participants.filter(function (person) {
-      if (person.vegan) {
-        return person.ta_lunch;
-      }
-      return 0;
-    }).length;
-
-    const normalDinner = participants.filter(function (person) {
-      if (!person.vegan) {
-        return person.dinner;
-      }
-      return 0;
-    }).length;
-
-    const deliveryNormalDinner = participants.filter(function (person) {
-      if (!person.vegan) {
-        return person.ta_dinner;
-      }
-      return 0;
-    }).length;
-
-    const veganDinner = participants.filter(function (person) {
-      if (person.vegan) {
-        return person.dinner;
-      }
-      return 0;
-    }).length;
-
-    const deliveryVeganDinner = participants.filter(function (person) {
-      if (person.vegan) {
-        return person.ta_dinner;
-      }
-      return 0;
-    }).length;
-
-    return [
-      normalLunch,
-      veganLunch,
-      deliveryNormalLunch,
-      deliveryVeganLunch,
-      normalDinner,
-      veganDinner,
-      deliveryNormalDinner,
-      deliveryVeganDinner,
-    ];
-  };
+  console.log("INDICE DE PARTICIPANTES: ", indexParticipant);
 
   const submitHandler = () => {
-    const order = orderSummary();
+    const order = orderSummary(participants);
     postMessage("hola soy la data");
     console.log(`ALMUERZO 
 
@@ -128,6 +67,43 @@ const Participant = () => {
       - Para llevar veganos: ${order[7]}`);
 
     // mandar mensaje de whatsapp
+  };
+
+  function writeUserData(data) {
+    const db = getDatabase();
+    set(ref(db, "users/" + indexParticipant), {
+      name: data.name,
+      lunch: data.lunch,
+      dinner: data.dinner,
+      vegan: data.vegan,
+      ta_lunch: data.ta_lunch,
+      ta_dinner: data.ta_dinner,
+    });
+  }
+
+  const submitNewParticipant = () => {
+    setOpen(true);
+
+    /*     writeUserData({
+      name: "Cecilia Ramallo",
+      lunch: true,
+      dinner: true,
+      vegan: false,
+      ta_lunch: false,
+      ta_dinner: false,
+    }); */
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
   };
 
   let tomorrow = new Date();
@@ -181,11 +157,20 @@ const Participant = () => {
         </Table>
       </TableContainer>
       <br></br>
-      <Button variant="contained" color="warning">
+      <Button
+        variant="contained"
+        color="warning"
+        onClick={submitNewParticipant}
+      >
         Agregar invitado
       </Button>
       <br></br>
       <br></br>
+      <SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
 
       <Button variant="contained" color="success" onClick={submitHandler}>
         Enviar a Hugo
