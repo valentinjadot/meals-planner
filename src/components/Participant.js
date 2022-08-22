@@ -41,35 +41,27 @@ const Participant = () => {
       .catch((error) => {
         console.error(error);
       });
-  });
+  }); //TODO: no quiero renderizar siempre, solo cuando cambien los participantes pero no lo puedo dejar como dependencia
 
   const [participants, setParticipants] = useState([]);
-
-  const submitHandler = () => {
-    const order = orderSummary(participants);
-    postMessage(order);
-
-    // mandar mensaje de whatsapp
-  };
-
-  const submitNewParticipant = () => {
-    setOpen(true);
-  };
-
   const [open, setOpen] = useState(false);
 
-  const handleClose = (value) => {
-    setOpen(false);
+  const submitMessageHandler = () => {
+    const order = orderSummary(participants);
+    postMessage(order);
   };
 
   let tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1).toString();
-  let text = tomorrow.toDateString();
+  tomorrow
+    .setDate(tomorrow.getDate() + 1)
+    .toString()
+    .toDateString();
+  let tomorrowDate = tomorrow.toDateString();
 
   return (
     <div className="App">
       <p>Comidas para mañana! 🐷 🥬</p>
-      <p>Fecha del pedido: {text}</p>
+      <p>Fecha del pedido: {tomorrowDate}</p>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -113,18 +105,18 @@ const Participant = () => {
         </Table>
       </TableContainer>
       <br></br>
-      <Button
-        variant="contained"
-        color="warning"
-        onClick={submitNewParticipant}
-      >
+      <Button variant="contained" color="warning" onClick={() => setOpen(true)}>
         Agregar invitado
       </Button>
       <br></br>
       <br></br>
-      <SimpleDialog open={open} onClose={handleClose} />
+      <SimpleDialog open={open} onClose={() => setOpen(false)} />
 
-      <Button variant="contained" color="success" onClick={submitHandler}>
+      <Button
+        variant="contained"
+        color="success"
+        onClick={submitMessageHandler}
+      >
         Enviar a Hugo
       </Button>
     </div>
