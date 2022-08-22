@@ -1,4 +1,4 @@
-const orderSummary = (participants) => {
+export const orderSummary = (participants) => {
   const normalLunch = participants.filter(function (person) {
     if (!person.vegan) {
       return person.lunch;
@@ -66,5 +66,3 @@ const orderSummary = (participants) => {
     deliveryVeganDinner,
   ];
 };
-
-export default orderSummary;

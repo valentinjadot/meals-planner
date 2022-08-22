@@ -20,7 +20,7 @@ import { getDatabase, ref, child, get } from "firebase/database";
 import { postMessage } from "../api/postMessage";
 
 // Utils
-import orderSummary from "../utils/orderSummary";
+import { orderSummary } from "../utils/orderSummary";
 
 const Participant = () => {
   useEffect(() => {
@@ -47,20 +47,7 @@ const Participant = () => {
 
   const submitHandler = () => {
     const order = orderSummary(participants);
-    postMessage("hola soy la data");
-    console.log(`ALMUERZO 
-
-      - Almuerzos normales: ${order[0]}
-      - Almuerzos veganos: ${order[1]}
-      - Para llevar normales: ${order[2]}
-      - Para llevar veganos: ${order[3]}
-      
-      CENA 
-      
-      - Cenas normales: ${order[4]}
-      - Cenas veganas: ${order[5]}
-      - Para llevar normales: ${order[6]}
-      - Para llevar veganos: ${order[7]}`);
+    postMessage(order);
 
     // mandar mensaje de whatsapp
   };
