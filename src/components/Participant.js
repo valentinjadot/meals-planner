@@ -52,10 +52,7 @@ const Participant = () => {
   };
 
   let tomorrow = new Date();
-  tomorrow
-    .setDate(tomorrow.getDate() + 1)
-    .toString()
-    .toDateString();
+  tomorrow.setDate(tomorrow.getDate() + 1).toString();
   let tomorrowDate = tomorrow.toDateString();
 
   return (
