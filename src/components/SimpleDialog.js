@@ -47,6 +47,7 @@ const SimpleDialog = (props) => {
   function writeUserData() {
     const db = getDatabase();
     set(ref(db, "users/" + indexParticipant), {
+      uid: indexParticipant,
       name: name,
       lunch: lunch,
       dinner: dinner,

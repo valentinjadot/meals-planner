@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 
 // Firebase
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, get, set } from "firebase/database";
+import { getDatabase, ref, child, get } from "firebase/database";
 
 // Whatsapp API
 import { postMessage } from "../api/postMessage";
@@ -69,16 +69,10 @@ const Participant = () => {
     setOpen(true);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [open, setOpen] = useState(false);
 
   const handleClose = (value) => {
     setOpen(false);
-    setSelectedValue(value);
   };
 
   let tomorrow = new Date();
@@ -141,11 +135,7 @@ const Participant = () => {
       </Button>
       <br></br>
       <br></br>
-      <SimpleDialog
-        selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
-      />
+      <SimpleDialog open={open} onClose={handleClose} />
 
       <Button variant="contained" color="success" onClick={submitHandler}>
         Enviar a Hugo
