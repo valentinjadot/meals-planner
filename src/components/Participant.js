@@ -17,6 +17,9 @@ import Button from "@mui/material/Button";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, update } from "firebase/database";
 
+// Utils
+import updateHandler from "../utils/updateData";
+
 const Participant = () => {
   const [participants, setParticipants] = useState([]);
   const [openForm, setOpenForm] = useState(false);
@@ -41,51 +44,6 @@ const Participant = () => {
         console.error(error);
       });
   }, [participants]);
-
-  const updateHandler = (user, atributte) => {
-    const db = getDatabase();
-    const updates = {};
-    if (atributte === "lunch") {
-      const updateData = {
-        ...user,
-        lunch: !user.lunch,
-        ta_lunch: user.lunch,
-      };
-      updates[`/users/${user.uid}/`] = updateData;
-      return update(ref(db), updates);
-    } else if (atributte === "dinner") {
-      const updateData = {
-        ...user,
-        dinner: !user.dinner,
-        ta_dinner: user.dinner,
-      };
-      updates[`/users/${user.uid}/`] = updateData;
-      return update(ref(db), updates);
-    } else if (atributte === "ta_lunch") {
-      const updateData = {
-        ...user,
-        ta_lunch: !user.ta_lunch,
-        lunch: user.ta_lunch,
-      };
-      updates[`/users/${user.uid}/`] = updateData;
-      return update(ref(db), updates);
-    } else if (atributte === "ta_dinner") {
-      const updateData = {
-        ...user,
-        ta_dinner: !user.ta_dinner,
-        dinner: user.ta_dinner,
-      };
-      updates[`/users/${user.uid}/`] = updateData;
-      return update(ref(db), updates);
-    } else {
-      const updateData = {
-        ...user,
-        vegan: !user.vegan,
-      };
-      updates[`/users/${user.uid}/`] = updateData;
-      return update(ref(db), updates);
-    }
-  };
 
   let tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1).toString();
@@ -121,7 +79,6 @@ const Participant = () => {
                   <Switch
                     defaultChecked={person.lunch}
                     onChange={() => updateHandler(person, "lunch")}
-                    disabled={person.ta_lunch === true ? true : false}
                     color="warning"
                   />
                 </TableCell>
@@ -129,23 +86,22 @@ const Participant = () => {
                   <Switch
                     defaultChecked={person.dinner}
                     onChange={() => updateHandler(person, "dinner")}
-                    disabled={person.ta_dinner === true ? true : false}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.ta_lunch}
+                    defaultChecked={!person.lunch}
+                    checked={!person.lunch}
                     onChange={() => updateHandler(person, "ta_lunch")}
-                    disabled={person.lunch}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.ta_dinner}
+                    defaultChecked={!person.dinner}
+                    checked={!person.dinner}
                     onChange={() => updateHandler(person, "ta_dinner")}
-                    disabled={person.dinner}
                     color="warning"
                   />
                 </TableCell>
