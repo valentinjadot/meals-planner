@@ -77,21 +77,21 @@ const Participant = () => {
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.lunch}
+                    checked={person.lunch}
                     onChange={() => updateHandler(person, "lunch")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.dinner}
+                    checked={person.dinner}
                     onChange={() => updateHandler(person, "dinner")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.ta_lunch}
+                    checked={person.ta_lunch}
                     /* checked={person.lunch ? false : person.ta_lunch} */
                     onChange={() => updateHandler(person, "ta_lunch")}
                     color="warning"
@@ -99,7 +99,7 @@ const Participant = () => {
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.ta_dinner}
+                    checked={person.ta_dinner}
                     /* checked={!person.dinner} */
                     onChange={() => updateHandler(person, "ta_dinner")}
                     color="warning"
@@ -107,7 +107,7 @@ const Participant = () => {
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={person.vegan}
+                    checked={person.vegan}
                     onChange={() => updateHandler(person, "vegan")}
                     color="warning"
                   />

@@ -1,6 +1,7 @@
 import "./App.css";
 import Participant from "./components/Participant";
 import meme from "./meme.jpeg";
+import finLogo from "./finLogo.gif";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <header className="App-header">
         <img src={meme} className="App-logo" alt="memeLogo" />
         <Participant />
-        <img src={meme} alt="finLogo" />
+        <img src={finLogo} alt="finLogo" />
       </header>
     </div>
   );
