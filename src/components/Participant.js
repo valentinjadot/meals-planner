@@ -91,16 +91,16 @@ const Participant = () => {
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={!person.lunch}
-                    checked={!person.lunch}
+                    defaultChecked={person.ta_lunch}
+                    /* checked={person.lunch ? false : person.ta_lunch} */
                     onChange={() => updateHandler(person, "ta_lunch")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    defaultChecked={!person.dinner}
-                    checked={!person.dinner}
+                    defaultChecked={person.ta_dinner}
+                    /* checked={!person.dinner} */
                     onChange={() => updateHandler(person, "ta_dinner")}
                     color="warning"
                   />

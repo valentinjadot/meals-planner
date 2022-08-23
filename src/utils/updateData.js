@@ -15,7 +15,7 @@ const updateHandler = (user, atributte) => {
     const updateData = {
       ...user,
       lunch: !user.lunch,
-      ta_lunch: user.lunch,
+      /* ta_lunch: user.lunch, */
     };
     updates[`/users/${user.uid}/`] = updateData;
     return update(ref(db), updates);
@@ -23,7 +23,7 @@ const updateHandler = (user, atributte) => {
     const updateData = {
       ...user,
       dinner: !user.dinner,
-      ta_dinner: user.dinner,
+      /* ta_dinner: user.dinner, */
     };
     updates[`/users/${user.uid}/`] = updateData;
     return update(ref(db), updates);
@@ -31,7 +31,7 @@ const updateHandler = (user, atributte) => {
     const updateData = {
       ...user,
       ta_lunch: !user.ta_lunch,
-      lunch: user.ta_lunch,
+      /* lunch: user.ta_lunch, */
     };
     updates[`/users/${user.uid}/`] = updateData;
     return update(ref(db), updates);
@@ -39,7 +39,7 @@ const updateHandler = (user, atributte) => {
     const updateData = {
       ...user,
       ta_dinner: !user.ta_dinner,
-      dinner: user.ta_dinner,
+      /* dinner: user.ta_dinner, */
     };
     updates[`/users/${user.uid}/`] = updateData;
     return update(ref(db), updates);
