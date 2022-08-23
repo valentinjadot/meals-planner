@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 
 // Firebase
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, get, update } from "firebase/database";
+import { getDatabase, ref, child, get } from "firebase/database";
 
 // Utils
 import updateHandler from "../utils/updateData";
