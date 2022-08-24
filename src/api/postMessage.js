@@ -12,8 +12,7 @@ export const postMessage = async (data) => {
     }
   );
   if (response.ok) {
-    return;
+    return true;
   }
-  console.log("ERROR");
-  console.log(response);
+  return false;
 };
