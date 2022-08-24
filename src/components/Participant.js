@@ -92,7 +92,6 @@ const Participant = () => {
                 <TableCell align="right">
                   <Switch
                     checked={person.ta_lunch}
-                    /* checked={person.lunch ? false : person.ta_lunch} */
                     onChange={() => updateHandler(person, "ta_lunch")}
                     color="warning"
                   />
@@ -100,7 +99,6 @@ const Participant = () => {
                 <TableCell align="right">
                   <Switch
                     checked={person.ta_dinner}
-                    /* checked={!person.dinner} */
                     onChange={() => updateHandler(person, "ta_dinner")}
                     color="warning"
                   />

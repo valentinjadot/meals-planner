@@ -20,17 +20,12 @@ const PassDialog = (props) => {
   const [pass, setPass] = useState("");
 
   const submitHandler = () => {
-    console.log("pass: ", pass);
-    console.log("real: ", process.env.REACT_APP_WHATSAPP_PASS);
     if (pass === process.env.REACT_APP_WHATSAPP_PASS) {
-      console.log("PASE");
       const order = orderSummary(participants);
-      console.log(order);
       postMessage(order);
       onClose(true);
       return;
     }
-    console.log("PASE 2");
     return;
   };
 
