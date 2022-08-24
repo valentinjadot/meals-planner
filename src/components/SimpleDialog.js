@@ -95,7 +95,7 @@ const SimpleDialog = (props) => {
             control={
               <Switch checked={dinner} onChange={() => setDinner(!dinner)} />
             }
-            label="Ceno en el local"
+            label="Cena en el local"
           />
           <FormControlLabel
             control={
@@ -124,7 +124,7 @@ const SimpleDialog = (props) => {
         </FormHelperText>
       </FormControl>
       <DialogActions>
-        <Button autoFocus onClick={submitHandler}>
+        <Button autoFocus onClick={submitHandler} disabled={!name}>
           Guardar
         </Button>
       </DialogActions>
