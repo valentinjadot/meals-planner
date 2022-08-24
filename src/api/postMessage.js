@@ -8,7 +8,7 @@ export const postMessage = async (data) => {
         Authorization: `Bearer ${whatsAppToken}`,
         "Content-Type": "application/json",
       },
-      body: `{ "messaging_product": "whatsapp", "to": "56992003400", "type": "template", "template": { "name": "order_summary", "language": { "code": "ES" },"components": [{"type": "body", "parameters": [{"type": "text", "text": "${data[0]}"},{"type": "text", "text": "${data[1]}"},{"type": "text", "text": "${data[2]}"},{"type": "text", "text": "${data[3]}"},{"type": "text", "text": "${data[4]}"},{"type": "text", "text": "${data[5]}"},{"type": "text", "text": "${data[6]}"},{"type": "text", "text": "${data[7]}"}]}] } }`,
+      body: `{ "messaging_product": "whatsapp", "to": "${process.env.REACT_APP_WHATSAPP_NUMBER}", "type": "template", "template": { "name": "order_summary", "language": { "code": "ES" },"components": [{"type": "body", "parameters": [{"type": "text", "text": "${data[0]}"},{"type": "text", "text": "${data[1]}"},{"type": "text", "text": "${data[2]}"},{"type": "text", "text": "${data[3]}"},{"type": "text", "text": "${data[4]}"},{"type": "text", "text": "${data[5]}"},{"type": "text", "text": "${data[6]}"},{"type": "text", "text": "${data[7]}"}]}] } }`,
     }
   );
   if (response.ok) {
