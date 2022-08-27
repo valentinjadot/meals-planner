@@ -16,10 +16,11 @@ import FormHelperText from "@mui/material/FormHelperText";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 
-const SimpleDialog = (props) => {
+const NewUserDialog = (props) => {
   const { onClose, open } = props;
   const [indexParticipant, setIndexParticipant] = useState();
   const [name, setName] = useState("");
+  const [fin, setFin] = useState(false);
   const [lunch, setLunch] = useState(false);
   const [dinner, setDinner] = useState(false);
   const [vegan, setVegan] = useState(false);
@@ -86,6 +87,10 @@ const SimpleDialog = (props) => {
           }}
         >
           <FormControlLabel
+            control={<Switch checked={fin} onChange={() => setFin(!fin)} />}
+            label="Soy estudiante de la FIN"
+          />
+          <FormControlLabel
             control={
               <Switch checked={lunch} onChange={() => setLunch(!lunch)} />
             }
@@ -120,7 +125,7 @@ const SimpleDialog = (props) => {
           />
         </FormGroup>
         <FormHelperText>
-          Ojo! Quedará así al menos que cambies tus preferencias
+          Ojo! La base de datos se reiniciará todos los días
         </FormHelperText>
       </FormControl>
       <DialogActions>
@@ -132,4 +137,4 @@ const SimpleDialog = (props) => {
   );
 };
 
-export default SimpleDialog;
+export default NewUserDialog;
