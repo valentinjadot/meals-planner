@@ -55,6 +55,7 @@ const NewUserDialog = (props) => {
       vegan: vegan,
       ta_lunch: taLunch,
       ta_dinner: taDinner,
+      fin: fin,
     });
   }
 
