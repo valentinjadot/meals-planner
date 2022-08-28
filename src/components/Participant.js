@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SimpleDialog from "./SimpleDialog";
-import PassDialog from "./PassDialog";
+import NewUserDialog from "./NewUserDialog";
+import Countdown from "./Countdown";
 
 // MUI
 import Table from "@mui/material/Table";
@@ -19,11 +19,14 @@ import { getDatabase, ref, child, get } from "firebase/database";
 
 // Utils
 import updateHandler from "../utils/updateData";
+import orderDate from "../utils/orderDate";
 
 const Participant = () => {
   const [participants, setParticipants] = useState([]);
   const [openForm, setOpenForm] = useState(false);
   const [openPass, setOpenPass] = useState(false);
+
+  let date = orderDate();
 
   useEffect(() => {
     const firebaseConfig = {
@@ -45,68 +48,70 @@ const Participant = () => {
       });
   }, [participants]);
 
-  let tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1).toString();
-  let tomorrowDate = tomorrow.toDateString();
-
   return (
     <div className="App">
-      <p>Comidas para mañana! 🐷 🥬</p>
-      <p>Fecha del pedido: {tomorrowDate}</p>
+      <h3>Comidas para mañana! 🐷 🥬</h3>
+      <p>Fecha del pedido: {date}</p>
+
+      <Countdown participants={participants} />
 
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 50 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
-              <TableCell align="right">Almuerzo</TableCell>
-              <TableCell align="right">Cena</TableCell>
-              <TableCell align="right">TA Almuerzo</TableCell>
-              <TableCell align="right">TA Cena</TableCell>
-              <TableCell align="right">Vegano</TableCell>
+              <TableCell align="center">FIN</TableCell>
+              <TableCell align="center">Almuerzo</TableCell>
+              <TableCell align="center">Cena</TableCell>
+              <TableCell align="center">TA Almuerzo</TableCell>
+              <TableCell align="center">TA Cena</TableCell>
+              <TableCell align="center">Vegano</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {participants?.map((person, index) => (
+            {participants?.map((user, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {person.name}
+                  {user.name}
+                </TableCell>
+                <TableCell align="center">
+                  <Switch defaultChecked={user.fin} disabled />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    checked={person.lunch}
-                    onChange={() => updateHandler(person, "lunch")}
+                    checked={user.lunch}
+                    onChange={() => updateHandler(user, "lunch")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    checked={person.dinner}
-                    onChange={() => updateHandler(person, "dinner")}
+                    checked={user.dinner}
+                    onChange={() => updateHandler(user, "dinner")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    checked={person.ta_lunch}
-                    onChange={() => updateHandler(person, "ta_lunch")}
+                    checked={user.ta_lunch}
+                    onChange={() => updateHandler(user, "ta_lunch")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    checked={person.ta_dinner}
-                    onChange={() => updateHandler(person, "ta_dinner")}
+                    checked={user.ta_dinner}
+                    onChange={() => updateHandler(user, "ta_dinner")}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
-                    checked={person.vegan}
-                    onChange={() => updateHandler(person, "vegan")}
+                    checked={user.vegan}
+                    onChange={() => updateHandler(user, "vegan")}
                     color="warning"
                   />
                 </TableCell>
@@ -115,6 +120,7 @@ const Participant = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
       <br></br>
       <Button
         variant="contained"
@@ -123,22 +129,7 @@ const Participant = () => {
       >
         Agregar invitado
       </Button>
-      <br></br>
-      <br></br>
-      <SimpleDialog open={openForm} onClose={() => setOpenForm(false)} />
-      <PassDialog
-        open={openPass}
-        participants={participants}
-        onClose={() => setOpenPass(false)}
-      />
-
-      <Button
-        variant="contained"
-        color="success"
-        onClick={() => setOpenPass(true)}
-      >
-        Enviar a Hugo
-      </Button>
+      <NewUserDialog open={openForm} onClose={() => setOpenForm(false)} />
     </div>
   );
 };
