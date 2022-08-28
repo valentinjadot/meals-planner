@@ -11,6 +11,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 
 // Utils
 import { orderSummary } from "../utils/orderSummary";
+import resetDataHandler from "../utils/resetData";
 
 // Whatsapp API
 import { postMessage } from "../api/postMessage";
@@ -23,6 +24,7 @@ const PassDialog = (props) => {
     if (pass === process.env.REACT_APP_WHATSAPP_PASS) {
       const order = orderSummary(participants);
       postMessage(order);
+      resetDataHandler(participants);
       onClose(true);
       return;
     }

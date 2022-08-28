@@ -4,9 +4,6 @@ import PassDialog from "./PassDialog";
 // MUI
 import Button from "@mui/material/Button";
 
-// Utils
-import resetDataHandler from "../utils/resetData";
-
 const Countdown = (props) => {
   const { participants } = props;
 
@@ -66,7 +63,6 @@ const Countdown = (props) => {
 
   const messageHandler = () => {
     setOpenPass(false);
-    resetDataHandler(participants);
     onClickReset();
   };
 
