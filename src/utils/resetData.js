@@ -8,27 +8,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const firebaseData = ref(getDatabase());
 
-const resetDataHandler = (user) => {
-  console.log(user);
-  /*   const db = getDatabase();
-  const finReset = {};
+const resetDataHandler = (participants) => {
+  const db = getDatabase();
 
-  const finResetData = {
-    ...user,
-    lunch: true,
-    dinner: true,
-    ta_lunch: false,
-    ta_dinner: false,
-  };
+  participants.forEach((user) => {
+    if (!user.fin) {
+      const finReset = {};
+      finReset[`/users/${user.uid}/`] = null;
+      update(ref(db), finReset);
+      return;
+    } else {
+      const finReset = {};
+      const finResetData = {
+        ...user,
+        lunch: true,
+        dinner: true,
+        ta_lunch: false,
+        ta_dinner: false,
+      };
 
-  if (!user.fin) {
-    remove(ref(db), `/users/${user.uid}/`);
-    return;
-  } else {
-    finReset[`/users/${user.uid}/`] = finResetData;
-    update(ref(db), finReset);
-    return;
-  } */
+      finReset[`/users/${user.uid}/`] = finResetData;
+      update(ref(db), finReset);
+      return;
+    }
+  });
 };
 
 export default resetDataHandler;

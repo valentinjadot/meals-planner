@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SimpleDialog from "./NewUserDialog";
-import PassDialog from "./PassDialog";
+import NewUserDialog from "./NewUserDialog";
+import Countdown from "./Countdown";
 
 // MUI
 import Table from "@mui/material/Table";
@@ -20,7 +20,6 @@ import { getDatabase, ref, child, get } from "firebase/database";
 // Utils
 import updateHandler from "../utils/updateData";
 import orderDate from "../utils/orderDate";
-import resetDataHandler from "../utils/resetData";
 
 const Participant = () => {
   const [participants, setParticipants] = useState([]);
@@ -51,11 +50,13 @@ const Participant = () => {
 
   return (
     <div className="App">
-      <p>Comidas para mañana! 🐷 🥬</p>
+      <h3>Comidas para mañana! 🐷 🥬</h3>
       <p>Fecha del pedido: {date}</p>
 
+      <Countdown participants={participants} />
+
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 50 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
@@ -119,6 +120,7 @@ const Participant = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
       <br></br>
       <Button
         variant="contained"
@@ -127,29 +129,7 @@ const Participant = () => {
       >
         Agregar invitado
       </Button>
-      <br></br>
-      <br></br>
-      <SimpleDialog open={openForm} onClose={() => setOpenForm(false)} />
-      <PassDialog
-        open={openPass}
-        participants={participants}
-        onClose={() => setOpenPass(false)}
-      />
-
-      <Button
-        variant="contained"
-        color="success"
-        onClick={() => setOpenPass(true)}
-      >
-        Enviar a Hugo
-      </Button>
-      <Button
-        variant="contained"
-        color="success"
-        onClick={() => resetDataHandler(participants)}
-      >
-        TEST
-      </Button>
+      <NewUserDialog open={openForm} onClose={() => setOpenForm(false)} />
     </div>
   );
 };

@@ -1,9 +1,19 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import PassDialog from "./PassDialog";
 
-const Countdown = () => {
+// MUI
+import Button from "@mui/material/Button";
+
+// Utils
+import resetDataHandler from "../utils/resetData";
+
+const Countdown = (props) => {
+  const { participants } = props;
+
   const Ref = useRef(null);
 
-  const [timer, setTimer] = useState("00:00:00");
+  const [timer, setTimer] = useState("24:00:00");
+  const [openPass, setOpenPass] = useState(false);
 
   const getTimeRemaining = (e) => {
     const total = Date.parse(e) - Date.parse(new Date());
@@ -32,7 +42,7 @@ const Countdown = () => {
   };
 
   const clearTimer = (e) => {
-    setTimer("00:00:10");
+    setTimer("24:00:00");
     if (Ref.current) clearInterval(Ref.current);
     const id = setInterval(() => {
       startTimer(e);
@@ -42,7 +52,7 @@ const Countdown = () => {
 
   const getDeadTime = () => {
     let deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + 10);
+    deadline.setSeconds(deadline.getSeconds() + 86400);
     return deadline;
   };
 
@@ -54,10 +64,30 @@ const Countdown = () => {
     clearTimer(getDeadTime());
   };
 
+  const messageHandler = () => {
+    setOpenPass(false);
+    resetDataHandler(participants);
+    onClickReset();
+  };
+
   return (
     <div className="App">
-      <h2>{timer}</h2>
-      <button onClick={onClickReset}>Reset</button>
+      <p>Lista válida por {timer}</p>
+
+      <Button
+        variant="contained"
+        color="success"
+        onClick={() => setOpenPass(true)}
+      >
+        Enviar pedido a Hugo
+      </Button>
+      <br></br>
+      <br></br>
+      <PassDialog
+        open={openPass}
+        participants={participants}
+        onClose={messageHandler}
+      />
     </div>
   );
 };
