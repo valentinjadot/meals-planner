@@ -68,8 +68,7 @@ const Countdown = (props) => {
 
   return (
     <div className="App">
-      <p>Lista válida por {timer}</p>
-
+      {/* <p>Lista válida por {timer}</p> */}
       <Button
         variant="contained"
         color="success"

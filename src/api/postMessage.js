@@ -17,5 +17,19 @@ export const postMessage = async (data) => {
     return true;
   }
   console.log("El mensaje no fue enviado");
+  console.log("Respuesta: ",response);
+  console.log("Resumen de la orden");
+  console.log(`
+  ALMUERZO 
+  - Almuerzos normales: ${data[0]}
+  - Almuerzos veganos: ${data[1]}
+  - Para llevar normales: ${data[2]}
+  - Para llevar veganos: ${data[3]}
+  
+  CENA 
+  - Cenas normales: ${data[4]}
+  - Cenas veganas: ${data[5]}
+  - Para llevar normales: ${data[6]}
+  - Para llevar veganos: ${data[7]}`);
   return false;
 };
