@@ -48,7 +48,7 @@ function Participant() {
       .catch((error) => {
         console.error(error);
       });
-  }, [participants]);
+  }, []);
 
   return (
     <div className="App">
