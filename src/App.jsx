@@ -9,12 +9,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={meme} className="App-logo" alt="memeLogo" />
+        <h1>SousChef</h1>
+        <img src={finLogo} alt="finLogo" />
       </header>
 
       <div className="App-body">
         <Participant />
-        <img src={finLogo} alt="finLogo" />
       </div>
     </div>
   );
