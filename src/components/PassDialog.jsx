@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // MUI
-import Button from "@mui/material/Button";
-import DialogTitle from "@mui/material/DialogTitle";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 // Utils
-import { orderSummary } from "../utils/orderSummary";
-import resetDataHandler from "../utils/resetData";
+import orderSummary from '../utils/orderSummary';
+import resetDataHandler from '../utils/resetData';
 
 // Whatsapp API
-import { postMessage } from "../api/postMessage";
+import postMessage from '../api/postMessage';
 
-const PassDialog = (props) => {
+function PassDialog(props) {
   const { onClose, open, participants } = props;
-  const [pass, setPass] = useState("");
+  const [pass, setPass] = useState('');
 
   const submitHandler = () => {
     if (pass === process.env.REACT_APP_WHATSAPP_PASS) {
@@ -26,9 +26,7 @@ const PassDialog = (props) => {
       postMessage(order);
       resetDataHandler(participants);
       onClose(true);
-      return;
     }
-    return;
   };
 
   return (
@@ -39,7 +37,7 @@ const PassDialog = (props) => {
         component="fieldset"
         variant="standard"
         sx={{
-          "& > :not(style)": { mx: 3 },
+          '& > :not(style)': { mx: 3 },
         }}
       >
         <TextField
@@ -58,6 +56,6 @@ const PassDialog = (props) => {
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 export default PassDialog;

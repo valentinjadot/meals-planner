@@ -1,8 +1,9 @@
-import "./App.css";
-import "./responsive.css";
-import Participant from "./components/Participant";
-import meme from "./meme.jpeg";
-import finLogo from "./finLogo.gif";
+import './App.css';
+import './responsive.css';
+import React from 'react';
+import Participant from './components/Participant';
+import meme from './meme.jpeg';
+import finLogo from './finLogo.gif';
 
 function App() {
   return (

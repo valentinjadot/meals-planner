@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from "react";
-import NewUserDialog from "./NewUserDialog";
-import Countdown from "./Countdown";
+import React, { useEffect, useState } from 'react';
 
 // MUI
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Switch from "@mui/material/Switch";
-import Button from "@mui/material/Button";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Switch from '@mui/material/Switch';
+import Button from '@mui/material/Button';
 
 // Firebase
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { initializeApp } from 'firebase/app';
+import {
+  getDatabase, ref, child, get,
+} from 'firebase/database';
+import Countdown from './Countdown';
+import NewUserDialog from './NewUserDialog';
 
 // Utils
-import updateHandler from "../utils/updateData";
-import orderDate from "../utils/orderDate";
+import updateHandler from '../utils/updateData';
+import orderDate from '../utils/orderDate';
 
-const Participant = () => {
+function Participant() {
   const [participants, setParticipants] = useState([]);
   const [openForm, setOpenForm] = useState(false);
   const [openPass, setOpenPass] = useState(false);
 
-  let date = orderDate();
+  const date = orderDate();
 
   useEffect(() => {
     const firebaseConfig = {
@@ -35,12 +37,12 @@ const Participant = () => {
     const app = initializeApp(firebaseConfig);
     const firebaseData = ref(getDatabase());
 
-    get(child(firebaseData, `users`))
+    get(child(firebaseData, 'users'))
       .then((snapshot) => {
         if (snapshot.exists()) {
           setParticipants([snapshot.val()][0]);
         } else {
-          console.log("No data available");
+          console.log('No data available');
         }
       })
       .catch((error) => {
@@ -51,7 +53,10 @@ const Participant = () => {
   return (
     <div className="App">
       <h3>Comidas para mañana! 🐷 🥬</h3>
-      <p>Fecha del pedido: {date}</p>
+      <p>
+        Fecha del pedido:
+        {date}
+      </p>
 
       <Countdown participants={participants} />
 
@@ -72,7 +77,7 @@ const Participant = () => {
             {participants?.map((user, index) => (
               <TableRow
                 key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   {user.name}
@@ -83,35 +88,35 @@ const Participant = () => {
                 <TableCell align="right">
                   <Switch
                     checked={user.lunch}
-                    onChange={() => updateHandler(user, "lunch")}
+                    onChange={() => updateHandler(user, 'lunch')}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
                     checked={user.dinner}
-                    onChange={() => updateHandler(user, "dinner")}
+                    onChange={() => updateHandler(user, 'dinner')}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
                     checked={user.ta_lunch}
-                    onChange={() => updateHandler(user, "ta_lunch")}
+                    onChange={() => updateHandler(user, 'ta_lunch')}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
                     checked={user.ta_dinner}
-                    onChange={() => updateHandler(user, "ta_dinner")}
+                    onChange={() => updateHandler(user, 'ta_dinner')}
                     color="warning"
                   />
                 </TableCell>
                 <TableCell align="right">
                   <Switch
                     checked={user.vegan}
-                    onChange={() => updateHandler(user, "vegan")}
+                    onChange={() => updateHandler(user, 'vegan')}
                     color="warning"
                   />
                 </TableCell>
@@ -121,7 +126,7 @@ const Participant = () => {
         </Table>
       </TableContainer>
 
-      <br></br>
+      <br />
       <Button
         variant="contained"
         color="warning"
@@ -132,6 +137,6 @@ const Participant = () => {
       <NewUserDialog open={openForm} onClose={() => setOpenForm(false)} />
     </div>
   );
-};
+}
 
 export default Participant;

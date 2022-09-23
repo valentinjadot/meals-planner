@@ -1,54 +1,54 @@
-export const orderSummary = (participants) => {
-  const normalLunch = participants.filter(function (person) {
+export default function orderSummary(participants) {
+  const normalLunch = participants.filter((person) => {
     if (!person.vegan) {
       return person.lunch;
     }
     return 0;
   }).length;
 
-  const deliveryNormalLunch = participants.filter(function (person) {
+  const deliveryNormalLunch = participants.filter((person) => {
     if (!person.vegan) {
       return person.ta_lunch;
     }
     return 0;
   }).length;
 
-  const veganLunch = participants.filter(function (person) {
+  const veganLunch = participants.filter((person) => {
     if (person.vegan) {
       return person.lunch;
     }
     return 0;
   }).length;
 
-  const deliveryVeganLunch = participants.filter(function (person) {
+  const deliveryVeganLunch = participants.filter((person) => {
     if (person.vegan) {
       return person.ta_lunch;
     }
     return 0;
   }).length;
 
-  const normalDinner = participants.filter(function (person) {
+  const normalDinner = participants.filter((person) => {
     if (!person.vegan) {
       return person.dinner;
     }
     return 0;
   }).length;
 
-  const deliveryNormalDinner = participants.filter(function (person) {
+  const deliveryNormalDinner = participants.filter((person) => {
     if (!person.vegan) {
       return person.ta_dinner;
     }
     return 0;
   }).length;
 
-  const veganDinner = participants.filter(function (person) {
+  const veganDinner = participants.filter((person) => {
     if (person.vegan) {
       return person.dinner;
     }
     return 0;
   }).length;
 
-  const deliveryVeganDinner = participants.filter(function (person) {
+  const deliveryVeganDinner = participants.filter((person) => {
     if (person.vegan) {
       return person.ta_dinner;
     }
@@ -65,4 +65,4 @@ export const orderSummary = (participants) => {
     deliveryNormalDinner,
     deliveryVeganDinner,
   ];
-};
+}

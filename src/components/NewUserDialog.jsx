@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // MUI
-import Button from "@mui/material/Button";
-import DialogTitle from "@mui/material/DialogTitle";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import Switch from "@mui/material/Switch";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormHelperText from "@mui/material/FormHelperText";
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import Switch from '@mui/material/Switch';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 
 // Firebase
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, get, set } from "firebase/database";
+import { initializeApp } from 'firebase/app';
+import {
+  getDatabase, ref, child, get, set,
+} from 'firebase/database';
 
-const NewUserDialog = (props) => {
+function NewUserDialog(props) {
   const { onClose, open } = props;
   const [indexParticipant, setIndexParticipant] = useState();
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [fin, setFin] = useState(false);
   const [lunch, setLunch] = useState(false);
   const [dinner, setDinner] = useState(false);
@@ -33,12 +35,12 @@ const NewUserDialog = (props) => {
   const app = initializeApp(firebaseConfig);
   const firebaseData = ref(getDatabase());
 
-  get(child(firebaseData, `users`))
+  get(child(firebaseData, 'users'))
     .then((snapshot) => {
       if (snapshot.exists()) {
         setIndexParticipant([snapshot.val()][0].length);
       } else {
-        console.log("No data available");
+        console.log('No data available');
       }
     })
     .catch((error) => {
@@ -47,15 +49,15 @@ const NewUserDialog = (props) => {
 
   function writeUserData() {
     const db = getDatabase();
-    set(ref(db, "users/" + indexParticipant), {
+    set(ref(db, `users/${indexParticipant}`), {
       uid: indexParticipant,
-      name: name,
-      lunch: lunch,
-      dinner: dinner,
-      vegan: vegan,
+      name,
+      lunch,
+      dinner,
+      vegan,
       ta_lunch: taLunch,
       ta_dinner: taDinner,
-      fin: fin,
+      fin,
     });
   }
 
@@ -72,7 +74,7 @@ const NewUserDialog = (props) => {
         component="fieldset"
         variant="standard"
         sx={{
-          "& > :not(style)": { mx: 3 },
+          '& > :not(style)': { mx: 3 },
         }}
       >
         <TextField
@@ -84,7 +86,7 @@ const NewUserDialog = (props) => {
 
         <FormGroup
           sx={{
-            "& > :not(style)": { my: 2, width: "25ch" },
+            '& > :not(style)': { my: 2, width: '25ch' },
           }}
         >
           <FormControlLabel
@@ -116,12 +118,12 @@ const NewUserDialog = (props) => {
             label="Almuerzo para llevar"
           />
           <FormControlLabel
-            control={
+            control={(
               <Switch
                 checked={taDinner}
                 onChange={() => setTaDinner(!taDinner)}
               />
-            }
+            )}
             label="Cena para llevar"
           />
         </FormGroup>
@@ -136,6 +138,6 @@ const NewUserDialog = (props) => {
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 export default NewUserDialog;

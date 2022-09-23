@@ -1,6 +1,8 @@
 // Firebase
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, update, remove } from "firebase/database";
+import { initializeApp } from 'firebase/app';
+import {
+  getDatabase, ref, update,
+} from 'firebase/database';
 
 const firebaseConfig = {
   databaseURL: `${process.env.REACT_APP_FIREBASE_DB_URL}`,
@@ -16,7 +18,6 @@ const resetDataHandler = (participants) => {
       const finReset = {};
       finReset[`/users/${user.uid}/`] = null;
       update(ref(db), finReset);
-      return;
     } else {
       const finReset = {};
       const finResetData = {
@@ -29,7 +30,6 @@ const resetDataHandler = (participants) => {
 
       finReset[`/users/${user.uid}/`] = finResetData;
       update(ref(db), finReset);
-      return;
     }
   });
 };
