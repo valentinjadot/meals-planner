@@ -12,57 +12,18 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 
+import createUser from '../queries/createUser';
+
 // Firebase
-import { initializeApp } from 'firebase/app';
-import {
-  getDatabase, ref, child, get, set,
-} from 'firebase/database';
-
 function NewUserDialog(props) {
-  const { onClose, open } = props;
-  const [indexParticipant, setIndexParticipant] = useState();
+  const { onClose, open, onNewUser } = props;
   const [name, setName] = useState('');
-  const [fin, setFin] = useState(false);
-  const [lunch, setLunch] = useState(false);
-  const [dinner, setDinner] = useState(false);
-  const [vegan, setVegan] = useState(false);
-  const [taLunch, setTaLunch] = useState(false);
-  const [taDinner, setTaDinner] = useState(false);
-
-  const firebaseConfig = {
-    databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
-  };
-  const app = initializeApp(firebaseConfig);
-  const firebaseData = ref(getDatabase());
-
-  get(child(firebaseData, 'users'))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        setIndexParticipant([snapshot.val()][0].length);
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-  function writeUserData() {
-    const db = getDatabase();
-    set(ref(db, `users/${indexParticipant}`), {
-      uid: indexParticipant,
-      name,
-      lunch,
-      dinner,
-      vegan,
-      ta_lunch: taLunch,
-      ta_dinner: taDinner,
-      fin,
-    });
-  }
+  const [isFin, setIsFin] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
 
   const submitHandler = () => {
-    writeUserData();
+    createUser({ name, isFin, isVegan });
+    onNewUser();
     onClose(true);
   };
 
@@ -90,41 +51,14 @@ function NewUserDialog(props) {
           }}
         >
           <FormControlLabel
-            control={<Switch checked={fin} onChange={() => setFin(!fin)} />}
+            control={<Switch checked={isFin} onChange={() => setIsFin(!isFin)} />}
             label="Soy estudiante de la FIN"
           />
           <FormControlLabel
             control={
-              <Switch checked={lunch} onChange={() => setLunch(!lunch)} />
-            }
-            label="Almuerzo en el local"
-          />
-          <FormControlLabel
-            control={
-              <Switch checked={dinner} onChange={() => setDinner(!dinner)} />
-            }
-            label="Cena en el local"
-          />
-          <FormControlLabel
-            control={
-              <Switch checked={vegan} onChange={() => setVegan(!vegan)} />
+              <Switch checked={isVegan} onChange={() => setIsVegan(!isVegan)} />
             }
             label="Soy Veggie/Vegano"
-          />
-          <FormControlLabel
-            control={
-              <Switch checked={taLunch} onChange={() => setTaLunch(!taLunch)} />
-            }
-            label="Almuerzo para llevar"
-          />
-          <FormControlLabel
-            control={(
-              <Switch
-                checked={taDinner}
-                onChange={() => setTaDinner(!taDinner)}
-              />
-            )}
-            label="Cena para llevar"
           />
         </FormGroup>
         <FormHelperText>

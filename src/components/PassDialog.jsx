@@ -10,21 +10,21 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 
 // Utils
-import orderSummary from '../utils/orderSummary';
-import resetDataHandler from '../utils/resetData';
+// import orderSummary from '../utils/orderSummary';
+// import resetDataHandler from '../utils/resetData';
 
 // Whatsapp API
 import postMessage from '../api/postMessage';
 
 function PassDialog(props) {
-  const { onClose, open, participants } = props;
+  const { onClose, open, users } = props;
   const [pass, setPass] = useState('');
 
   const submitHandler = () => {
     if (pass === process.env.REACT_APP_WHATSAPP_PASS) {
-      const order = orderSummary(participants);
+      const order = orderSummary(users);
       postMessage(order);
-      resetDataHandler(participants);
+      resetDataHandler(users);
       onClose(true);
     }
   };

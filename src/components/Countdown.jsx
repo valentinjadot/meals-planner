@@ -5,7 +5,7 @@ import PassDialog from './PassDialog';
 // MUI
 
 function Countdown(props) {
-  const { participants } = props;
+  const { users } = props;
 
   const Ref = useRef(null);
 
@@ -80,7 +80,7 @@ function Countdown(props) {
       <br />
       <PassDialog
         open={openPass}
-        participants={participants}
+        users={users}
         onClose={messageHandler}
       />
     </div>

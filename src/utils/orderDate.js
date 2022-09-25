@@ -1,16 +1,16 @@
-const orderDate = () => {
+const isFridayOrWeekend = (date) => [5, 6, 0].includes(date.getDay());
+const dayAfter = (day) => new Date(new Date(day).setDate(day.getDate() + 1));
+
+export default function orderDate() {
   const today = new Date();
-  today.setDate(today.getDate() + 1).toString();
-  const tomorrowDate = today.toDateString();
-  const friday = new Date().getDay() === 5;
+  let futureDate = new Date(today);
 
-  if (friday) {
-    const fridayDate = new Date();
-    fridayDate.setDate(fridayDate.getDate() + 3).toString();
-    const mondayDate = fridayDate.toDateString();
-    return mondayDate;
+  if (isFridayOrWeekend(today)) {
+    while (isFridayOrWeekend(futureDate)) {
+      futureDate = dayAfter(futureDate);
+    }
+  } else {
+    futureDate = dayAfter(today);
   }
-  return tomorrowDate;
-};
-
-export default orderDate;
+  return futureDate;
+}

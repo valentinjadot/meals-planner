@@ -1,54 +1,54 @@
-export default function orderSummary(participants) {
-  const normalLunch = participants.filter((person) => {
+export default function orderSummary(users) {
+  const normalLunch = users.filter((person) => {
     if (!person.vegan) {
       return person.lunch;
     }
     return 0;
   }).length;
 
-  const deliveryNormalLunch = participants.filter((person) => {
+  const deliveryNormalLunch = users.filter((person) => {
     if (!person.vegan) {
       return person.ta_lunch;
     }
     return 0;
   }).length;
 
-  const veganLunch = participants.filter((person) => {
+  const veganLunch = users.filter((person) => {
     if (person.vegan) {
       return person.lunch;
     }
     return 0;
   }).length;
 
-  const deliveryVeganLunch = participants.filter((person) => {
+  const deliveryVeganLunch = users.filter((person) => {
     if (person.vegan) {
       return person.ta_lunch;
     }
     return 0;
   }).length;
 
-  const normalDinner = participants.filter((person) => {
+  const normalDinner = users.filter((person) => {
     if (!person.vegan) {
       return person.dinner;
     }
     return 0;
   }).length;
 
-  const deliveryNormalDinner = participants.filter((person) => {
+  const deliveryNormalDinner = users.filter((person) => {
     if (!person.vegan) {
       return person.ta_dinner;
     }
     return 0;
   }).length;
 
-  const veganDinner = participants.filter((person) => {
+  const veganDinner = users.filter((person) => {
     if (person.vegan) {
       return person.dinner;
     }
     return 0;
   }).length;
 
-  const deliveryVeganDinner = participants.filter((person) => {
+  const deliveryVeganDinner = users.filter((person) => {
     if (person.vegan) {
       return person.ta_dinner;
     }
