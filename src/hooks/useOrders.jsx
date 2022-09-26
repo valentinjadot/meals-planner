@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
-import hitEndpoint from '../utils/hitEndpoint';
+import getUsers from '../queries/getOrder';
 
 export default function useOrders() {
   const [orders, setOrders] = useState([]);
@@ -23,7 +23,7 @@ export default function useOrders() {
   };
 
   const fetchOrders = async () => {
-    const data = await hitEndpoint('/orders');
+    const data = await getUsers();
     if (data) {
       console.log('structureData:', structureData(data));
       setOrders(
