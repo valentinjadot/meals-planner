@@ -5,7 +5,7 @@ import Meal from './Meal';
 export default function DayOrders({ date, dayOrders }) {
   useEffect(() => console.log('dayOrders', dayOrders), [dayOrders]);
 
-  const meals = Object.keys(dayOrders);
+  const meals = Object.keys(dayOrders).sort().reverse();
 
   const formattedDate = () => dayjs(date).locale('es').format('dddd, MMMM D');
 
