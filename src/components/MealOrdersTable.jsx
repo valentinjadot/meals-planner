@@ -9,7 +9,7 @@ import React from 'react';
 
 import MealOrdersTableLine from './MealOrdersTableLine';
 
-export default function MealOrdersTable({ orders, isToday, meal }) {
+export default function MealOrdersTable({ orders, date, meal }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 50 }} aria-label="simple table">
@@ -27,7 +27,7 @@ export default function MealOrdersTable({ orders, isToday, meal }) {
             <MealOrdersTableLine
               order={order}
               key={order.id}
-              isToday={isToday}
+              date={date}
               meal={meal}
             />
           ))}

@@ -3,10 +3,7 @@ import dayjs from 'dayjs';
 import Meal from './Meal';
 
 export default function DayOrders({ date, dayOrders }) {
-  const isToday = () => dayjs().isSame(dayjs(date), 'day');
-
   const meals = Object.keys(dayOrders).sort().reverse();
-
   const formattedDate = () => dayjs(date).locale('es').format('dddd, MMMM D');
 
   return (
@@ -16,7 +13,7 @@ export default function DayOrders({ date, dayOrders }) {
       </h3>
 
       {dayOrders && meals.map((meal) => (
-        <Meal mealOrders={dayOrders[meal]} meal={meal} key={meal} isToday={isToday()} />
+        <Meal mealOrders={dayOrders[meal]} meal={meal} key={meal} date={date} />
       ))}
     </>
   );

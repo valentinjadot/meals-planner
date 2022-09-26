@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import MealOrdersTable from './MealOrdersTable';
 
-export default function Meal({ mealOrders, meal, isToday }) {
+export default function Meal({ mealOrders, meal, date }) {
   const sortedMealOrders = () => _.sortBy(mealOrders, ['userName']);
 
   return (
@@ -10,7 +10,7 @@ export default function Meal({ mealOrders, meal, isToday }) {
       <p>
         {meal === 'lunch' ? 'Almuerzo' : 'Cena'}
       </p>
-      <MealOrdersTable orders={sortedMealOrders()} isToday={isToday} meal={meal} />
+      <MealOrdersTable orders={sortedMealOrders()} date={date} meal={meal} />
     </>
   );
 }
