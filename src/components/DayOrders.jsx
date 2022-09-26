@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import Meal from './Meal';
 
 export default function DayOrders({ date, dayOrders }) {
-  useEffect(() => console.log('dayOrders', dayOrders), [dayOrders]);
+  const isToday = () => dayjs().isSame(dayjs(date), 'day');
 
   const meals = Object.keys(dayOrders).sort().reverse();
 
@@ -16,7 +16,7 @@ export default function DayOrders({ date, dayOrders }) {
       </h3>
 
       {dayOrders && meals.map((meal) => (
-        <Meal mealOrders={dayOrders[meal]} meal={meal} key={meal} />
+        <Meal mealOrders={dayOrders[meal]} meal={meal} key={meal} isToday={isToday()} />
       ))}
     </>
   );

@@ -11,7 +11,6 @@ export default function useUsers() {
   const fetchUsers = async () => {
     const req = await fetch('/users');
     const loadedUsers = await req.json();
-    console.log(loadedUsers);
     setUsers(loadedUsers);
   };
 

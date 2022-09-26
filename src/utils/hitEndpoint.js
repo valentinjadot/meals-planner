@@ -10,7 +10,6 @@ const baseUrl = () => {
 export default async function hitEndpoint(query, payload, type = 'get') {
   try {
     const url = baseUrl() + query;
-    console.log(url);
     const { data } = await axios[type](url, payload);
     return data;
   } catch (err) {

@@ -25,7 +25,6 @@ export default function useOrders() {
   const fetchOrders = async () => {
     const data = await getUsers();
     if (data) {
-      console.log('structureData:', structureData(data));
       setOrders(
         structureData(data),
       );

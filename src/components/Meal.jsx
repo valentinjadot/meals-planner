@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import MealOrdersTable from './MealOrdersTable';
 
-export default function Meal({ mealOrders, meal }) {
-  useEffect(() => console.log('mealOrders', mealOrders), [mealOrders]);
-
+export default function Meal({ mealOrders, meal, isToday }) {
   const sortedMealOrders = () => _.sortBy(mealOrders, ['userName']);
 
   return (
@@ -12,7 +10,7 @@ export default function Meal({ mealOrders, meal }) {
       <p>
         {meal === 'lunch' ? 'Almuerzo' : 'Cena'}
       </p>
-      <MealOrdersTable orders={sortedMealOrders()} />
+      <MealOrdersTable orders={sortedMealOrders()} isToday={isToday} />
     </>
   );
 }

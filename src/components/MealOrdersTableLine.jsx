@@ -3,7 +3,9 @@ import TableRow from '@mui/material/TableRow';
 import React from 'react';
 import Toggle from './Toggle';
 
-export default function MealOrdersTableLine({ order }) {
+export default function MealOrdersTableLine({ order, isToday }) {
+  const isRegistrationClosed = () => isToday && (new Date().getHours() > 14);
+
   return (
     <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -26,6 +28,7 @@ export default function MealOrdersTableLine({ order }) {
           orderId={order.id}
           name="isActive"
           value={order.isActive}
+          disabled={isRegistrationClosed()}
         />
       </TableCell>
       <TableCell align="right">
