@@ -4,9 +4,9 @@ import React from 'react';
 import Toggle from './Toggle';
 
 export default function MealOrdersTableLine({ order, isToday, meal }) {
-  const isRegistrationClosed = () => isToday && (new Date().getHours() > 14);
+  const isRegistrationClosed = () => isToday && (new Date().getHours() >= 14);
   const takeAwayDeadline = meal === 'lunch' ? 11 : 17;
-  const isTakeAwayClosed = () => isToday && (new Date().getHours() > takeAwayDeadline);
+  const isTakeAwayClosed = () => isToday && (new Date().getHours() >= takeAwayDeadline);
 
   return (
     <TableRow
