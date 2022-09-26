@@ -3,8 +3,10 @@ import TableRow from '@mui/material/TableRow';
 import React from 'react';
 import Toggle from './Toggle';
 
-export default function MealOrdersTableLine({ order, isToday }) {
+export default function MealOrdersTableLine({ order, isToday, meal }) {
   const isRegistrationClosed = () => isToday && (new Date().getHours() > 14);
+  const takeAwayDeadline = meal === 'lunch' ? 11 : 17;
+  const isTakeAwayClosed = () => isToday && (new Date().getHours() > takeAwayDeadline);
 
   return (
     <TableRow
@@ -34,15 +36,17 @@ export default function MealOrdersTableLine({ order, isToday }) {
       <TableCell align="right">
         <Toggle
           orderId={order.id}
-          name="isTakeAway"
-          value={order.isTakeAway}
+          name="isVegan"
+          value={order.isVegan}
+          disabled={isRegistrationClosed()}
         />
       </TableCell>
       <TableCell align="right">
         <Toggle
           orderId={order.id}
-          name="isVegan"
-          value={order.isVegan}
+          name="isTakeAway"
+          value={order.isTakeAway}
+          disabled={isTakeAwayClosed()}
         />
       </TableCell>
     </TableRow>

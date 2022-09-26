@@ -10,7 +10,7 @@ export default function Meal({ mealOrders, meal, isToday }) {
       <p>
         {meal === 'lunch' ? 'Almuerzo' : 'Cena'}
       </p>
-      <MealOrdersTable orders={sortedMealOrders()} isToday={isToday} />
+      <MealOrdersTable orders={sortedMealOrders()} isToday={isToday} meal={meal} />
     </>
   );
 }
