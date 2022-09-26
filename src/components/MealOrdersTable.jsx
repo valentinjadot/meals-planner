@@ -5,20 +5,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import React, { useEffect } from 'react';
-import useUsersOrders from '../hooks/useUsersOrders';
-import useCreateMissingOrders from '../hooks/useCreateMissingOrders';
+import React from 'react';
 
-import MealRegistrationTableLine from './MealRegistrationTableLine';
+import MealOrdersTableLine from './MealOrdersTableLine';
 
-export default function MealRegistrationTable({ users }) {
-  const [usersOrders, triggerReloadUsersOrders] = useUsersOrders(users);
-  const [newOrders] = useCreateMissingOrders(users, usersOrders);
-
-  useEffect(() => {
-    triggerReloadUsersOrders();
-  }, [newOrders]);
-
+export default function MealOrdersTable({ orders }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 50 }} aria-label="simple table">
@@ -32,11 +23,10 @@ export default function MealRegistrationTable({ users }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {usersOrders && usersOrders?.map((userOrder) => (
-            <MealRegistrationTableLine
-              userOrder={userOrder}
-              key={userOrder.users.id}
-              onChange={triggerReloadUsersOrders}
+          {orders && orders?.map((order) => (
+            <MealOrdersTableLine
+              order={order}
+              key={order.id}
             />
           ))}
         </TableBody>

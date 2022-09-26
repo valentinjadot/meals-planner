@@ -1,32 +1,18 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import dayjs from 'dayjs';
-import 'dayjs/locale/es';
 import NewUserDialog from '../components/NewUserDialog';
-import MealRegistrationTable from '../components/MealRegistrationTable';
-import orderDate from '../utils/orderDate';
-import useUsers from '../hooks/useUsers';
+import DayOrders from '../components/DayOrders';
+import useOrders from '../hooks/useOrders';
 
 export default function MealRegistrationScreen() {
   const [openForm, setOpenForm] = useState(false);
-  const [users, triggerReloadUsers] = useUsers();
-  const date = orderDate();
+  const [orders, triggerReloadOrders] = useOrders();
+
+  const dates = Object.keys(orders);
 
   return (
     <React.StrictMode>
       <div className="App">
-        <h3>Comidas para mañana! 🐷 🥬</h3>
-        <p>
-          Fecha del pedido:
-          {' '}
-          {dayjs(date).locale('es').format('dddd, MMMM D')}
-        </p>
-
-        {/* <Countdown users={users} /> */}
-        {users && <MealRegistrationTable users={users} />}
-
-        <br />
-
         <Button
           variant="contained"
           color="warning"
@@ -35,10 +21,16 @@ export default function MealRegistrationScreen() {
           Agregar invitado
         </Button>
 
+        <h3>Comidas! 🐷 🥬</h3>
+
+        {orders && dates.map((date) => (
+          <DayOrders date={date} dayOrders={orders[date]} key={date} />
+        ))}
+
         <NewUserDialog
           open={openForm}
           onClose={() => setOpenForm(false)}
-          onNewUser={triggerReloadUsers}
+          onNewUser={triggerReloadOrders}
         />
       </div>
     </React.StrictMode>

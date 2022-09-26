@@ -1,12 +1,7 @@
-import supabaseClient from '../config/supabase';
+import hitEndpoint from '../utils/hitEndpoint';
 
-export default async function updateOrder(id, changesToOrder) {
-  const { data, error } = await supabaseClient
-    .from('orders')
-    .update(changesToOrder)
-    .match({ id });
-
-  console.log(data);
-
-  return !!error;
+export default async function updateOrder({ orderId, changesToOrder }) {
+  const data = hitEndpoint(`/orders/${orderId}`, { order: changesToOrder }, 'patch');
+  console.log('dataAfterOrderUpdate', data);
+  return data;
 }

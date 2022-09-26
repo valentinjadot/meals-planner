@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import supabaseClient from '../config/supabase';
 
 export default function useUsers() {
   const [users, setUsers] = useState([]);
@@ -10,14 +9,10 @@ export default function useUsers() {
   };
 
   const fetchUsers = async () => {
-    const { data, error } = await supabaseClient
-      .from('users')
-      .select()
-      .order('name');
-
-    console.log('fetchUsers', data);
-    error && console.error('fetchUsers', error);
-    setUsers(data);
+    const req = await fetch('/users');
+    const loadedUsers = await req.json();
+    console.log(loadedUsers);
+    setUsers(loadedUsers);
   };
 
   useEffect(() => {
