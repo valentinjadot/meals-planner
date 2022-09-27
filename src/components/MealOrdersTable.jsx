@@ -17,7 +17,7 @@ export default function MealOrdersTable({ orders, date, meal }) {
           <TableRow>
             <TableCell>Nombre</TableCell>
             <TableCell align="center">FIN</TableCell>
-            <TableCell align="center">Quiero comer!</TableCell>
+            <TableCell align="center">Inscrito?</TableCell>
             <TableCell align="center">Vegano?</TableCell>
             <TableCell align="center">Take away?</TableCell>
           </TableRow>

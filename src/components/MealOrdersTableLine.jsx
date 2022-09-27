@@ -1,10 +1,12 @@
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import React from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import Toggle from './Toggle';
 
 export default function MealOrdersTableLine({ order, date, meal }) {
+  const [desactivated, setDesactivated] = useState(!order.isActive);
+
   const isToday = dayjs().isSame(dayjs(date), 'day');
   const isTomorrow = dayjs().add(1, 'day').isSame(dayjs(date), 'day');
   const isRegistrationClosed = (isToday || isTomorrow) && (new Date().getHours() >= 14);
@@ -31,9 +33,10 @@ export default function MealOrdersTableLine({ order, date, meal }) {
       <TableCell align="right">
         <Toggle
           orderId={order.id}
-          name="isActive"
           value={order.isActive}
           disabled={isRegistrationClosed}
+          type="checkbox"
+          onChange={() => setDesactivated((prevValue) => !prevValue)}
         />
       </TableCell>
       <TableCell align="right">
@@ -41,7 +44,7 @@ export default function MealOrdersTableLine({ order, date, meal }) {
           orderId={order.id}
           name="isVegan"
           value={order.isVegan}
-          disabled={isRegistrationClosed}
+          disabled={isRegistrationClosed || desactivated}
         />
       </TableCell>
       <TableCell align="right">
@@ -49,7 +52,7 @@ export default function MealOrdersTableLine({ order, date, meal }) {
           orderId={order.id}
           name="isTakeAway"
           value={order.isTakeAway}
-          disabled={isTakeAwayClosed}
+          disabled={isTakeAwayClosed || desactivated}
         />
       </TableCell>
     </TableRow>
