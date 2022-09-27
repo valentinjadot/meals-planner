@@ -31,7 +31,7 @@ export default function SearchBar({ options, onChange }) {
     <ThemeProvider theme={darkTheme}>
       <Autocomplete
         freeSolo
-        inputValue={filteredName}
+        inputValue={filteredName || ''}
         onInputChange={(e, newInputValue) => setFilteredName(newInputValue)}
         sx={{ width: '100%' }}
         options={options}
