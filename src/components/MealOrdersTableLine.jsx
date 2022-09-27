@@ -1,24 +1,12 @@
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import React, { useState } from 'react';
-import dayjs from 'dayjs';
 import Toggle from './Toggle';
-
-const TWENTY_FOUR_HOURS = 24;
-const END_OF_LUNCH_HOUR = 14;
-const MORNING_NOTIFICATION_HOUR = 11;
-const AFTERNOON_NOTIFICATION_HOUR = 17;
+import deadlinesUtil from '../utils/deadlinesUtil';
 
 export default function MealOrdersTableLine({ order, date, meal }) {
   const [orderDesactivated, setOrderDesactivated] = useState(!order.isActive);
-  const now = dayjs();
-  const orderDate = dayjs(date);
-  const registrationDeadline = orderDate.hour(END_OF_LUNCH_HOUR).subtract(TWENTY_FOUR_HOURS, 'hours');
-  const isRegistrationClosed = now.isAfter(registrationDeadline);
-  const takeAwayDeadline = meal === 'lunch'
-    ? orderDate.hour(MORNING_NOTIFICATION_HOUR)
-    : orderDate.hour(AFTERNOON_NOTIFICATION_HOUR);
-  const isTakeAwayClosed = now.isAfter(takeAwayDeadline);
+  const { isRegistrationClosed, isTakeAwayClosed } = deadlinesUtil({ date, meal });
 
   return (
     <TableRow
