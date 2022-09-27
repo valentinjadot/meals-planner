@@ -38,12 +38,14 @@ export default function SearchBar({ options, onChange }) {
         autoHighlight
         getOptionLabel={(option) => option}
         renderOption={(props, option) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
           <Box component="li" {...props}>
             {option}
           </Box>
         )}
         renderInput={(params) => (
           <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             label="Filtrar por nombre"
             inputProps={{

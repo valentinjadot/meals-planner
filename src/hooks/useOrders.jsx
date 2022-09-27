@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import _ from 'lodash';
 import getUsers from '../queries/getOrder';
 
 export default function useOrders() {
