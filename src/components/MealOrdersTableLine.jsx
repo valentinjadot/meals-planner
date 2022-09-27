@@ -4,14 +4,21 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import Toggle from './Toggle';
 
-export default function MealOrdersTableLine({ order, date, meal }) {
-  const [desactivated, setDesactivated] = useState(!order.isActive);
+const TWENTY_FOUR_HOURS = 24;
+const END_OF_LUNCH_HOUR = 14;
+const MORNING_NOTIFICATION_HOUR = 11;
+const AFTERNOON_NOTIFICATION_HOUR = 17;
 
-  const isToday = dayjs().isSame(dayjs(date), 'day');
-  const isTomorrow = dayjs().add(1, 'day').isSame(dayjs(date), 'day');
-  const isRegistrationClosed = (isToday || isTomorrow) && (new Date().getHours() >= 14);
-  const takeAwayDeadline = meal === 'lunch' ? 11 : 17;
-  const isTakeAwayClosed = isToday && (new Date().getHours() >= takeAwayDeadline);
+export default function MealOrdersTableLine({ order, date, meal }) {
+  const [orderDesactivated, setOrderDesactivated] = useState(!order.isActive);
+  const now = dayjs();
+  const orderDate = dayjs(date);
+  const registrationDeadline = orderDate.hour(END_OF_LUNCH_HOUR).subtract(TWENTY_FOUR_HOURS, 'hours');
+  const isRegistrationClosed = now.isAfter(registrationDeadline);
+  const takeAwayDeadline = meal === 'lunch'
+    ? orderDate.hour(MORNING_NOTIFICATION_HOUR)
+    : orderDate.hour(AFTERNOON_NOTIFICATION_HOUR);
+  const isTakeAwayClosed = now.isAfter(takeAwayDeadline);
 
   return (
     <TableRow
@@ -36,7 +43,7 @@ export default function MealOrdersTableLine({ order, date, meal }) {
           value={order.isActive}
           disabled={isRegistrationClosed}
           type="checkbox"
-          onChange={() => setDesactivated((prevValue) => !prevValue)}
+          onChange={() => setOrderDesactivated((prevValue) => !prevValue)}
         />
       </TableCell>
       <TableCell align="right">
@@ -44,7 +51,7 @@ export default function MealOrdersTableLine({ order, date, meal }) {
           orderId={order.id}
           name="isVegan"
           value={order.isVegan}
-          disabled={isRegistrationClosed || desactivated}
+          disabled={isRegistrationClosed || orderDesactivated}
         />
       </TableCell>
       <TableCell align="right">
@@ -52,7 +59,7 @@ export default function MealOrdersTableLine({ order, date, meal }) {
           orderId={order.id}
           name="isTakeAway"
           value={order.isTakeAway}
-          disabled={isTakeAwayClosed || desactivated}
+          disabled={isTakeAwayClosed || orderDesactivated}
         />
       </TableCell>
     </TableRow>
