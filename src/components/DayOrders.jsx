@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
+import _ from 'lodash';
 import Meal from './Meal';
 
 export default function DayOrders({ date, dayOrders }) {
-  const meals = Object.keys(dayOrders).sort().reverse();
-  const formattedDate = () => dayjs(date).locale('es').format('dddd, MMMM D');
+  const ordersGroupedByMeal = _.groupBy(dayOrders, (order) => order.meal);
+  const meals = Object.keys(ordersGroupedByMeal).sort().reverse();
+  const formattedDate = dayjs(date).locale('es').format('dddd, MMMM D');
 
   return (
     <>
       <h3>
-        {formattedDate()}
+        {formattedDate}
       </h3>
 
-      {dayOrders && meals.map((meal) => (
-        <Meal mealOrders={dayOrders[meal]} meal={meal} key={meal} date={date} />
+      {ordersGroupedByMeal && meals.map((meal) => (
+        <Meal mealOrders={ordersGroupedByMeal[meal]} meal={meal} key={meal} date={date} />
       ))}
     </>
   );

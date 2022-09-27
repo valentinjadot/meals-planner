@@ -10,23 +10,11 @@ export default function useOrders() {
     setReload((current) => !current);
   };
 
-  const groupByDate = (data) => _.groupBy(data, (e) => e.executionDate);
-  const groupByMeal = (data) => _.groupBy(data, (e) => e.meal);
-
-  const structureData = (data) => {
-    const groupedByDate = groupByDate(data);
-    const groupedByDateAndMeal = {};
-    Object.keys(groupedByDate).forEach((date) => {
-      groupedByDateAndMeal[date] = groupByMeal(groupedByDate[date]);
-    });
-    return groupedByDateAndMeal;
-  };
-
   const fetchOrders = async () => {
     const data = await getUsers();
     if (data) {
       setOrders(
-        structureData(data),
+        data,
       );
     }
   };
