@@ -28,6 +28,7 @@ export default function MealOrdersTableLine({ order, date, meal }) {
       <TableCell align="right">
         <Toggle
           orderId={order.id}
+          name="isActive"
           value={order.isActive}
           disabled={isRegistrationClosed}
           type="checkbox"
